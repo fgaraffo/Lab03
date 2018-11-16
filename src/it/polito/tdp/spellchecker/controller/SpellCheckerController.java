@@ -11,7 +11,7 @@ import it.polito.tdp.spellchecker.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
@@ -19,8 +19,8 @@ public class SpellCheckerController {
 
     private Model model;
 	
-    @FXML // fx:id="choiceBox"
-    private ChoiceBox<?> choiceBox; // Value injected by FXMLLoader
+    @FXML // fx:id="boxLingua"
+    private ComboBox<?> boxLingua; // Value injected by FXMLLoader
     
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -47,6 +47,11 @@ public class SpellCheckerController {
     private Label txtPerformance; // Value injected by FXMLLoader
 
     @FXML
+    void doActivation(ActionEvent event) {
+
+    }
+    
+    @FXML
     void doClear(ActionEvent event) {
 
     }
@@ -62,7 +67,8 @@ public class SpellCheckerController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert txtInput != null : "fx:id=\"txtInput\" was not injected: check your FXML file 'SpellChecker.fxml'.";
+    	assert boxLingua != null : "fx:id=\"boxLingua\" was not injected: check your FXML file 'SpellChecker.fxml'.";
+    	assert txtInput != null : "fx:id=\"txtInput\" was not injected: check your FXML file 'SpellChecker.fxml'.";
         assert btnSpellCheck != null : "fx:id=\"btnSpellCheck\" was not injected: check your FXML file 'SpellChecker.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'SpellChecker.fxml'.";
         assert btnClearTxt != null : "fx:id=\"btnClearTxt\" was not injected: check your FXML file 'SpellChecker.fxml'.";

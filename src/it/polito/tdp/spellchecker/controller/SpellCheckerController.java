@@ -20,7 +20,7 @@ public class SpellCheckerController {
     private Model model;
 	
     @FXML // fx:id="boxLingua"
-    private ComboBox<?> boxLingua; // Value injected by FXMLLoader
+    private ComboBox<String> boxLingua; // Value injected by FXMLLoader
     
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;

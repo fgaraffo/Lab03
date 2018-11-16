@@ -78,6 +78,19 @@ public class SpellCheckerController {
     }
 
 	public void setModel(Model m) {
+		
+		txtInput.setDisable(true);
+		txtInput.setText("Selezionare una lingua");
+
+		txtResult.setDisable(true);
+		boxLingua.getItems().addAll("English", "Italian");
+
+		btnSpellCheck.setDisable(true);
+		btnClearTxt.setDisable(true);
+
+		txtStatus.setText("");
+		txtPerformance.setText("");
+
 		this.model = m;
 		
 	}

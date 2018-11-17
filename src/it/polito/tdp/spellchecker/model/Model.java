@@ -2,6 +2,7 @@ package it.polito.tdp.spellchecker.model;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Model {
@@ -34,6 +35,8 @@ public class Model {
 				dictionary.add(line.toLowerCase());
 			}
 			
+			Collections.sort(dictionary);
+			
 			br.close();
 			return true;
 			
@@ -64,5 +67,39 @@ public class Model {
 		return res;
 	}
 	
+	public List <Word> spellCheckTextLinear (List <String> inputText){
+		
+		List <Word> res = new ArrayList <Word> ();
+		
+		for (String s: inputText)
+		{
+			Word word = new Word(s);
+			
+			boolean found = false;
+			for (String s1 : dictionary) {
+				if (s1.equalsIgnoreCase(s)) {
+					found = true;
+					break;
+				}
+			}
+			
+			if (found) {
+				word.setCorrect(true);	
+			} else {
+				word.setCorrect(false);
+			}
+
+			res.add(word);
+		}
+		
+		return res;
+	}
+	
+	public List <Word> spellCheckTextDichotomic (List <String> inputText){
+		
+		List <Word> res = new ArrayList <Word> ();
+
+		return res;
+	}
 	
 }

@@ -23,6 +23,9 @@ public class SpellCheckerController {
 
     private Model model;
     private List <String> inputText;
+    
+    private final static boolean dicotomica = false;
+	private final static boolean lineare = false;
 	
     @FXML // fx:id="boxLingua"
     private ComboBox<String> boxLingua; // Value injected by FXMLLoader
@@ -109,9 +112,15 @@ public class SpellCheckerController {
 		}
     	
     	long start = System.nanoTime();
-    	List <Word> res;
-    	
-    	res = model.controllo(inputText);
+    	List<Word> res;
+		if (dicotomica) {
+			res = model.spellCheckTextDichotomic(inputText);
+		} else if (lineare) {
+			res = model.spellCheckTextLinear(inputText);
+		} else {
+			res = model.controllo(inputText);
+
+		}
     	long stop = System.nanoTime();
     	
     	// COSTRUIRE OUTPUT

@@ -5,6 +5,7 @@
 package it.polito.tdp.spellchecker.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.spellchecker.model.Model;
@@ -18,6 +19,7 @@ import javafx.scene.control.TextArea;
 public class SpellCheckerController {
 
     private Model model;
+    private String [] parole;
 	
     @FXML // fx:id="boxLingua"
     private ComboBox<String> boxLingua; // Value injected by FXMLLoader
@@ -49,20 +51,42 @@ public class SpellCheckerController {
     @FXML
     void doActivation(ActionEvent event) {
 
+    	txtInput.clear();
+    	txtInput.setDisable(false);
+    	txtResult.setDisable(false);
+    	btnSpellCheck.setDisable(false);
+    	btnClearTxt.setDisable(false);
+    	txtStatus.setDisable(false);
+    	txtPerformance.setDisable(false);
+    	   	
+    	
     }
     
     @FXML
     void doClear(ActionEvent event) {
-
+    	
+    	txtResult.clear();
     }
 
     @FXML
     void doSpellCheck(ActionEvent event) {
 
+    	if (txtInput.getText().length()==0)
+    	{
+    		txtStatus.setText("ERRORE: Inserire delle parole.");
+    		return;
+    	}
     	
+    	String input = txtInput.getText().toLowerCase();
+    	input = input.replaceAll("[^a-zA-Z ]", "");
+
+    	System.out.println(input);
+    	parole = input.split(" ");
     	
+    	ArrayList<String> res = model.controllo(parole);
     	
-    	
+    	txtResult.appendText(res.toString());
+    	txtStatus.setText(String.format("The text contains %d errors", 0));    	
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

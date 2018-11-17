@@ -6,9 +6,12 @@ package it.polito.tdp.spellchecker.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.StringTokenizer;
 
 import it.polito.tdp.spellchecker.model.Model;
+import it.polito.tdp.spellchecker.model.Word;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,7 +22,7 @@ import javafx.scene.control.TextArea;
 public class SpellCheckerController {
 
     private Model model;
-    private String [] parole;
+    private ArrayList <Word> parole;
 	
     @FXML // fx:id="boxLingua"
     private ComboBox<String> boxLingua; // Value injected by FXMLLoader
@@ -59,7 +62,6 @@ public class SpellCheckerController {
     	txtStatus.setDisable(false);
     	txtPerformance.setDisable(false);
     	   	
-    	
     }
     
     @FXML
@@ -80,13 +82,21 @@ public class SpellCheckerController {
     	String input = txtInput.getText().toLowerCase();
     	input = input.replaceAll("[^a-zA-Z ]", "");
 
-    	System.out.println(input);
-    	parole = input.split(" ");
+    	StringTokenizer st = new StringTokenizer(input, " ");
     	
-    	ArrayList<String> res = model.controllo(parole);
+    	while(st.hasMoreTokens())
+		{
+    		parole.add(new Word(st.nextToken()));
+		}
     	
-    	txtResult.appendText(res.toString());
-    	txtStatus.setText(String.format("The text contains %d errors", 0));    	
+    	ArrayList <Word> res = model.controllo(parole);
+    	
+    	for (Word w : res)
+    	{
+    		txtResult.appendText(w.toString());
+    	}
+    	
+    	txtStatus.setText(String.format("The text contains %d errors", res.size()));    	
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

@@ -11,32 +11,20 @@ public class Model {
 	public Model ()
 	{
 		dictionary = new ArrayList <String> ();
-		this.dictionary();
-		System.out.println(dictionary.toString());
+		this.loadDictionary("English");
 	}
 
-	public void dictionary () {
+	public void loadDictionary (String language) {
 		
 		try 
 		{
-			Reader r = new FileReader("rsc/English.txt");
+			Reader r = new FileReader("rsc/"+language+".txt");
 			BufferedReader br = new BufferedReader(r);
 			
-/*			while(br.readLine() != null)
-			{
-				String s = br.readLine();
-				dictionary.add(s);
-				br.
-			}*/
-		
 			String line = null;
 			while ((line = br.readLine()) != null) 
 			{
-				if (!dictionary.contains(line.toLowerCase()))
-				{
-					dictionary.add(line.toLowerCase());
-				}	
-				
+				dictionary.add(line.toLowerCase());
 			}
 			
 			br.close();
@@ -44,29 +32,23 @@ public class Model {
 		} 
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			System.out.println("ERRORE: apertura file non riuscita.");
 		}
 		
 	}
 	
-	public ArrayList<String> controllo(String[] parole)
+	public ArrayList <Word> controllo(ArrayList <Word> parole)
 	{
-//		for (int i = 0; i<parole.length;i++)
-//		{
-//			System.out.println(parole[i]);
-//		}
-		
-		String [] s = new String ([]);
-		ArrayList <String> res = new ArrayList<String>();
-		for (int i=0;i<parole.length;i++)
-		{
 			
-			if (!dictionary.contains(parole[i]))
+		for (Word w : parole)
+		{
+			if (dictionary.contains(w.getWord()))
 			{
-				res.add(parole[i]);
+				parole.remove(w);
 			}
+			
 		}
-		return res;
+		return parole;
 	}
 	
 	

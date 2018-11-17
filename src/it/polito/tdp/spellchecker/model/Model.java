@@ -7,27 +7,31 @@ import java.util.List;
 public class Model {
 
 	private List <String> dictionary;
+	private String language;
 	
 	public Model ()
 	{
-		dictionary = new ArrayList <String> ();
-		this.loadDictionary("English");
+		
 	}
 
 	public boolean loadDictionary (String language) {
+		
+		dictionary = new ArrayList <String> ();
+		this.language = language;
 		
 		try 
 		{
 			Reader r = new FileReader("rsc/"+language+".txt");
 			BufferedReader br = new BufferedReader(r);
-			
-			String line = null;
+						
+			String line;
 			while ((line = br.readLine()) != null) 
 			{
 				dictionary.add(line.toLowerCase());
 			}
 			
 			br.close();
+			return true;
 			
 		} 
 		catch (IOException e)
@@ -36,21 +40,24 @@ public class Model {
 			return false;
 		}
 		
-		return true;
 	}
 	
-	public ArrayList <Word> controllo(ArrayList <Word> parole)
+	public List <Word> controllo (List <String> inputText)
 	{
-			
-		for (Word w : parole)
+		List <Word> res = new ArrayList <Word> ();
+		
+		for (String s : inputText)
 		{
-			if (dictionary.contains(w.getWord()))
-			{
-				parole.remove(w);
+			Word word = new Word(s);
+			if (dictionary.contains(s)){
+				word.setCorrect(true);
+			} else {
+				word.setCorrect(false);
 			}
-			
+			res.add(word);
 		}
-		return parole;
+		
+		return res;
 	}
 	
 	

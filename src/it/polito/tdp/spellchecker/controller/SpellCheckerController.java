@@ -5,7 +5,7 @@
 package it.polito.tdp.spellchecker.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
@@ -22,7 +22,7 @@ import javafx.scene.control.TextArea;
 public class SpellCheckerController {
 
     private Model model;
-    private ArrayList <String> parole;
+    private List <String> inputText;
 	
     @FXML // fx:id="boxLingua"
     private ComboBox<String> boxLingua; // Value injected by FXMLLoader
@@ -75,16 +75,23 @@ public class SpellCheckerController {
     
     @FXML
     void doClear(ActionEvent event) {
-    	
+    	txtInput.clear();
     	txtResult.clear();
+    	txtStatus.setText("");
     }
 
     @FXML
     void doSpellCheck(ActionEvent event) {
 
-    	model.loadDictionary(boxLingua.getValue())
+    	txtResult.clear();
+    	inputText = new LinkedList <String> ();
     	
-    	
+    	if (!model.loadDictionary(boxLingua.getValue()))
+    	{
+    		txtResult.setText("ERRORE: lettura dizionario non riuscita");
+    		return;
+    	}
+    	    	    	
     	if (txtInput.getText().length()==0)
     	{
     		txtStatus.setText("ERRORE: Inserire delle parole.");
@@ -98,17 +105,30 @@ public class SpellCheckerController {
     	
     	while(st.hasMoreTokens())
 		{
-    		parole.add(new Word(st.nextToken()));
+    		inputText.add(st.nextToken());
 		}
     	
-    	ArrayList <Word> res = model.controllo(parole);
+    	long start = System.nanoTime();
+    	List <Word> res;
     	
+    	res = model.controllo(inputText);
+    	long stop = System.nanoTime();
+    	
+    	// COSTRUIRE OUTPUT
+    	
+    	int errori = 0;
     	for (Word w : res)
     	{
-    		txtResult.appendText(w.toString());
+    		if (!w.isCorrect())
+    		{
+    			txtResult.appendText(w.getWord()+"\n");
+    			errori++;
+    		}
+    			
     	}
     	
-    	txtStatus.setText(String.format("The text contains %d errors", res.size()));    	
+		txtPerformance.setText("Spell check completed in " + (stop - start) / 1E9 + " seconds");
+    	txtStatus.setText(String.format("The text contains %d errors", errori));    	
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

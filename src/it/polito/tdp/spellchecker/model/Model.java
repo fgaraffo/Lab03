@@ -16,6 +16,10 @@ public class Model {
 
 	public boolean loadDictionary (String language) {
 		
+		if (dictionary != null && this.language.equals(language)) {
+			return true;
+		}
+		
 		dictionary = new ArrayList <String> ();
 		this.language = language;
 		

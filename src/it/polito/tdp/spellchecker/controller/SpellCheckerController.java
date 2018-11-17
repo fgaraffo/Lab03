@@ -22,7 +22,7 @@ import javafx.scene.control.TextArea;
 public class SpellCheckerController {
 
     private Model model;
-    private ArrayList <Word> parole;
+    private ArrayList <String> parole;
 	
     @FXML // fx:id="boxLingua"
     private ComboBox<String> boxLingua; // Value injected by FXMLLoader
@@ -54,14 +54,22 @@ public class SpellCheckerController {
     @FXML
     void doActivation(ActionEvent event) {
 
-    	txtInput.clear();
-    	txtInput.setDisable(false);
-    	txtResult.setDisable(false);
-    	btnSpellCheck.setDisable(false);
-    	btnClearTxt.setDisable(false);
-    	txtStatus.setDisable(false);
-    	txtPerformance.setDisable(false);
-    	   	
+    	if (boxLingua.getValue() != null)
+    	{
+    		txtInput.clear();
+    		txtInput.setDisable(false);
+    		txtResult.setDisable(false);
+    		btnSpellCheck.setDisable(false);
+    		btnClearTxt.setDisable(false);  		
+    	}
+    	else
+    	{
+    		txtInput.setDisable(true);
+    		txtResult.setDisable(true);
+    		btnSpellCheck.setDisable(true);
+    		btnClearTxt.setDisable(true);
+    		txtResult.setText("ERRORE: Inserire una lingua.");
+       	}
     }
     
     @FXML

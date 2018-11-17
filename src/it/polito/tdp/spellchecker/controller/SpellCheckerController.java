@@ -57,11 +57,12 @@ public class SpellCheckerController {
     	if (boxLingua.getValue() != null)
     	{
     		txtInput.clear();
+    		txtResult.clear();
     		txtInput.setDisable(false);
     		txtResult.setDisable(false);
     		btnSpellCheck.setDisable(false);
-    		btnClearTxt.setDisable(false);  		
-    	}
+    		btnClearTxt.setDisable(false); 
+      	}
     	else
     	{
     		txtInput.setDisable(true);
@@ -81,6 +82,9 @@ public class SpellCheckerController {
     @FXML
     void doSpellCheck(ActionEvent event) {
 
+    	model.loadDictionary(boxLingua.getValue())
+    	
+    	
     	if (txtInput.getText().length()==0)
     	{
     		txtStatus.setText("ERRORE: Inserire delle parole.");

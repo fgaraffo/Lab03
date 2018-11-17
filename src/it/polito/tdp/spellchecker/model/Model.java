@@ -14,7 +14,7 @@ public class Model {
 		this.loadDictionary("English");
 	}
 
-	public void loadDictionary (String language) {
+	public boolean loadDictionary (String language) {
 		
 		try 
 		{
@@ -33,8 +33,10 @@ public class Model {
 		catch (IOException e)
 		{
 			System.out.println("ERRORE: apertura file non riuscita.");
+			return false;
 		}
 		
+		return true;
 	}
 	
 	public ArrayList <Word> controllo(ArrayList <Word> parole)

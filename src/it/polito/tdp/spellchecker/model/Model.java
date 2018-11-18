@@ -3,6 +3,7 @@ package it.polito.tdp.spellchecker.model;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Model {
@@ -95,11 +96,44 @@ public class Model {
 		return res;
 	}
 	
+	
 	public List <Word> spellCheckTextDichotomic (List <String> inputText){
 		
 		List <Word> res = new ArrayList <Word> ();
+		
+		for (String s: inputText)
+		{
+			Word word = new Word(s);
+			
+			if (binaria(s))
+				word.setCorrect(true);
+			else
+				word.setCorrect(false);
+			res.add(word);
+		}
 
 		return res;
+	}
+	
+	public boolean binaria (String s)
+	{
+		int inizio = 0;
+		int fine = dictionary.size();
+		
+		while (inizio != fine)
+		{
+			int media = (fine+inizio)/2;
+			String m = dictionary.get(media);
+			
+			if (s.compareTo(m) == 0)
+				return true;
+			else if (s.compareTo(m) < 0)
+				fine = media;
+			else 
+				inizio = media+1;
+		}
+			
+		return false;
 	}
 	
 }
